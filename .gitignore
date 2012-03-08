@@ -1,0 +1,28 @@
+## build system files to ignore
+gradle-app.setting
+.gradle
+build
+target
+_TMP
+tmp
+out
+bin
+
+## intellij metadata files
+.iml
+.ipr
+.iws
+
+## eclipse metadata files
+.settings
+.classpath
+.project
+
+## generic files to ignore
+*~
+*.lock
+*.DS_Store
+*.swp
+*.out
+Icon?
+Thumbs.db
