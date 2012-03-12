@@ -9,9 +9,10 @@ out
 bin
 
 ## intellij metadata files
-.iml
-.ipr
-.iws
+.idea
+*.iml
+*.ipr
+*.iws
 
 ## eclipse metadata files
 .settings
