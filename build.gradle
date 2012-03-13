@@ -3,21 +3,22 @@
  * Management (SCM) tools.
  */
 
+/*
 buildscript {
     repositories {
-        mavenCentral()
         add(new org.apache.ivy.plugins.resolver.URLResolver()) {
             name = 'GitHub'
             addArtifactPattern 'http://cloud.github.com/downloads/[organisation]/[module]/[module]-[revision].[ext]'
         }
     }
     dependencies {
-        classpath 'PieceOf8:gradle-snapshot-plugin:0.1.0'
+        classpath 'PieceOf8:gradle-snapshot-plugin:0.1.1'
     }
 }
+*/
 
 apply plugin: "java"
-apply plugin: "snapshot"
+//apply plugin: "snapshot"
 apply plugin: "eclipse"
 apply plugin: "idea"
 
@@ -57,6 +58,8 @@ dependencies {
 }
 
 jar {
+    dependsOn configurations.runtime
+
     manifest {
         attributes "Implementation-Title": project.name,
                    "Implementation-Version": version.toString(),
@@ -64,11 +67,16 @@ jar {
                    "Build-Jdk": System.properties['java.version'],
                    "Manifest-Version": 1.0
     }
+
+    // adds runtime dependencies to jar package
+    from { configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
+/*
 snapshot {
     filename = "git.properties"
 }
+*/
 
 eclipse {
     classpath { plusConfigurations += configurations.compileOnly }
