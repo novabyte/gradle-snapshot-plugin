@@ -32,7 +32,7 @@ addArtifactPattern 'http://cloud.github.com/downloads/[organisation]/[module]/[m
         }
     }
     dependencies {
-        classpath 'PieceOf8:gradle-snapshot-plugin:0.1.1'
+        classpath 'PieceOf8:gradle-snapshot-plugin:0.1.2'
     }
 }
 
@@ -53,7 +53,7 @@ addArtifactPattern 'http://cloud.github.com/downloads/[organisation]/[module]/[m
         }
     }
     dependencies {
-        classpath 'PieceOf8:gradle-snapshot-plugin:0.1.1'
+        classpath 'PieceOf8:gradle-snapshot-plugin:0.1.2'
     }
 }
 
