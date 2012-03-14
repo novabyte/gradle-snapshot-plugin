@@ -34,7 +34,7 @@ tasks.withType(Compile).all {
 
 groupId  = "com.pieceof8.gradle"
 artifact = "snapshot"
-version  = "0.1.2-SNAPSHOT"
+version  = "0.1.2"
 
 repositories {
     mavenCentral()
