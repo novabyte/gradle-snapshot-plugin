@@ -1,3 +1,5 @@
+![Gradle Snapshot Plugin](https://github.com/PieceOf8/gradle-snapshot-plugin/raw/master/src/site/images/snapshot-logo.png)
+
 # Gradle Snapshot Plugin
 
 Snapshot is a [Gradle](http://gradle.org/) plugin that generates metadata at build-time from a Source Control Management (SCM) tool.
@@ -6,9 +8,9 @@ It takes the most recent commit from the SCM repository and generates a [`.prope
 
 Snapshot integrates with the [Java](http://www.gradle.org/docs/current/userguide/java_plugin.html) and [War](http://gradle.org/docs/current/userguide/war_plugin.html) plugins from Gradle's core plugins to make packaging the generated file output very easy (auto-managed).
 
-At the moment this plugin __only recognises Git repositories__ (using the [JGit](http://eclipse.org/jgit/) library) but there are plans to [include support for any SCM tool](issues/3) that has a Java library recognising that SCM layout.
+At the moment this plugin __only recognises Git repositories__ (using the [JGit](http://eclipse.org/jgit/) library) but there are plans to [include support for any SCM tool](https://github.com/PieceOf8/gradle-snapshot-plugin/issues/3) that has a Java library recognising that SCM layout.
 
-You can report bugs and discuss features on the [issues](issues) page.
+You can report bugs and discuss features on the [issues](https://github.com/PieceOf8/gradle-snapshot-plugin/issues) page.
 
 <br/>
 Gradle Snapshot Plugin is an open-source component from Piece Of 8. <br/>It's created and maintained by Chris Molozian (@novabyte). <br/>Code licensed under the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0). Documentation licensed under [CC BY 3.0](http://creativecommons.org/licenses/by/3.0/).
@@ -67,7 +69,7 @@ snapshot {
 
 ### Real World Example
 
-If you're not sure how to integrate this code into your build script have a look at the [`build.gradle`](blob/master/build.gradle) for the Snapshot plugin, we use this too!
+If you're not sure how to integrate this code into your build script have a look at the [`build.gradle`](https://github.com/PieceOf8/gradle-snapshot-plugin/blob/master/build.gradle) for the Snapshot plugin, we use this too!
 
 
 ## Configuration
