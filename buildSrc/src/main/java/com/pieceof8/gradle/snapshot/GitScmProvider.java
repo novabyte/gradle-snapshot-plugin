@@ -83,6 +83,10 @@ class GitScmProvider extends ScmProvider {
         }
 
         RevWalk revWalk = new RevWalk(repo);
+        if (HEAD.getObjectId() == null) {
+            val msg = "Could not find any commits from HEAD ref.";
+            throw new RuntimeException(msg);
+        }
         RevCommit commit = revWalk.parseCommit(HEAD.getObjectId());
         revWalk.markStart(commit);
 
