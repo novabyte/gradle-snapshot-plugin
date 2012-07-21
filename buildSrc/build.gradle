@@ -53,10 +53,12 @@ dependencies {
 }
 
 jar {
+    baseName 'gradle-snapshot-plugin'
+
     manifest {
-        attributes "Implementation-Title": "gradle-snapshot-plugin",
+        attributes "Implementation-Title": 'gradle-snapshot-plugin',
                    "Implementation-Version": version.toString(),
-                   "Created-By": "Gradle " + gradle.gradleVersion,
+                   "Created-By": 'Gradle ' + gradle.gradleVersion,
                    "Build-Jdk": System.properties['java.version'],
                    "Manifest-Version": 1.0
     }
