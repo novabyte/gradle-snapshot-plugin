@@ -1,0 +1,72 @@
+/**
+ * Snapshot is a Gradle plugin for generating build metadata from Source Control
+ * Management (SCM) tools.
+ */
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+tasks.withType(Compile).all {
+    // enable all warnings as errors
+    options.compilerArgs << "-Xlint:{all}" << "-Werror"
+    options.encoding = "UTF-8"
+    options.optimize = true
+}
+
+group   = 'com.pieceof8.gradle'
+version = '0.2.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'http://maven.tmatesoft.com/content/repositories/releases/'
+    }
+}
+
+configurations {
+    provided
+    testProvided { extendsFrom provided }
+}
+
+sourceSets {
+    main { compileClasspath += configurations.provided }
+    test { compileClasspath += configurations.provided + configurations.testProvided }
+}
+
+dependencies {
+    provided group: 'org.projectlombok', name: 'lombok', version: '0.11.2'
+    compile gradleApi()
+
+    compile(
+        [group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '2.0.0.201206130900-r'],
+        [group: 'org.tmatesoft.hg4j', name: 'hg4j', version: '1.0.0']
+    )
+
+    testCompile(
+        [group: 'junit', name: 'junit', version: '4.10'],
+        [group: 'org.hamcrest', name: 'hamcrest-library', version: '1.2.1']
+    )
+}
+
+jar {
+    manifest {
+        attributes "Implementation-Title": project.name,
+                   "Implementation-Version": version.toString(),
+                   "Created-By": "Gradle " + gradle.gradleVersion,
+                   "Build-Jdk": System.properties['java.version'],
+                   "Manifest-Version": 1.0
+    }
+}
+
+eclipse {
+    project {
+        name = 'gradle-snapshot-plugin'
+        comment = 'Snapshot is an SCM metadata plugin (for Gradle).'
+    }
+
+    classpath { plusConfigurations += configurations.provided }
+}

@@ -1,4 +1,4 @@
-## build system files to ignore
+## build system files
 gradle-app.setting
 .gradle
 build
@@ -19,7 +19,7 @@ bin
 .classpath
 .project
 
-## generic files to ignore
+## generic files
 *~
 *.lock
 *.DS_Store

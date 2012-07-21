@@ -1,0 +1,21 @@
+/**
+ * A test build script for the Gradle Snapshot plugin with a Mercurial SCM
+ * repository.
+ */
+
+apply plugin: 'snapshot'
+
+import com.pieceof8.gradle.snapshot.SnapshotPlugin
+import com.pieceof8.gradle.snapshot.Commit
+
+group = 'com.pieceof8.gradle.snapshot.test'
+
+snapshot {
+    verbose = true
+}
+
+tasks.getByName(SnapshotPlugin.SNAPSHOT_TASK_NAME).doLast {
+    assert project.ext.properties[Commit.MESSAGE_FULL] == "Test commit."
+    assert project.ext.properties[Commit.USER_NAME] == "Chris Molozian"
+    assert project.ext.properties[Commit.USER_EMAIL] == "chris@pieceof8.com"
+}
