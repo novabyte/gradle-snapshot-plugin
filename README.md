@@ -36,7 +36,7 @@ addArtifactPattern 'http://cloud.github.com/downloads/[organisation]/[module]/[m
     dependencies {
         classpath(
             [group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '2.0.0.201206130900-r'],
-            [group: 'PieceOf8', name: 'gradle-snapshot-plugin', version: '0.2.1']
+            [group: 'PieceOf8', name: 'gradle-snapshot-plugin', version: '0.3.0']
         )
     }
 }
@@ -62,7 +62,7 @@ addArtifactPattern 'http://cloud.github.com/downloads/[organisation]/[module]/[m
     dependencies {
         classpath(
             [group: 'org.tmatesoft.hg4j', name: 'hg4j', version: '1.0.0'],
-            [group: 'PieceOf8', name: 'gradle-snapshot-plugin', version: '0.2.1']
+            [group: 'PieceOf8', name: 'gradle-snapshot-plugin', version: '0.3.0']
         )
     }
 }
@@ -91,7 +91,7 @@ addArtifactPattern 'http://cloud.github.com/downloads/[organisation]/[module]/[m
     dependencies {
         classpath(
             [group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '2.0.0.201206130900-r'],
-            [group: 'PieceOf8', name: 'gradle-snapshot-plugin', version: '0.2.1']
+            [group: 'PieceOf8', name: 'gradle-snapshot-plugin', version: '0.3.0']
         )
     }
 }
