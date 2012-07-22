@@ -54,7 +54,6 @@ class SnapshotTask extends DefaultTask {
     public SnapshotTask() {
         final Project project = getProject();
         File outputDir = new File(project.getBuildDir(), "snapshot");
-        outputDir.mkdirs();
 
         extension = project.getExtensions()
                 .getByType(SnapshotPluginExtension.class);
@@ -92,6 +91,7 @@ class SnapshotTask extends DefaultTask {
         }
 
         properties.putAll(commit.toMap());
+        snapshotFile.getParentFile().mkdirs();
         properties.store(new FileWriter(snapshotFile), BUILD_LABEL);
     }
 
