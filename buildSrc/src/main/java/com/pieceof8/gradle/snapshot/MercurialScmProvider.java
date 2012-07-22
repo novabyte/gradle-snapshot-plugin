@@ -18,6 +18,7 @@ package com.pieceof8.gradle.snapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import lombok.*;
 
@@ -68,7 +69,13 @@ class MercurialScmProvider extends ScmProvider {
 
         HgLogCommand hgLogCommand = repo.createLogCommand();
         hgLogCommand.limit(1);
-        HgChangeset commit = hgLogCommand.execute().get(0);
+        List<HgChangeset> changesets = hgLogCommand.execute();
+        if (changesets.size() < 1) {
+            val msg = "Could not find any changesets in Mercurial repository.";
+            throw new RuntimeException(msg);
+        }
+
+        HgChangeset commit = changesets.get(0);
 
         return new Commit(
                 sdf.format(new Date()), // build time
