@@ -57,7 +57,7 @@ public class SnapshotPlugin implements Plugin<Project> {
         final PluginContainer plugins = project.getPlugins();
 
         val task = tasks.add(SNAPSHOT_TASK_NAME, SnapshotTask.class);
-        task.setDescription("Generates build info from a SCM repository.");
+        task.setDescription("Generates build information from an SCM repository.");
 
         plugins.withType(JavaPlugin.class, new Action<JavaPlugin>() {
             @Override
