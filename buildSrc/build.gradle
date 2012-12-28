@@ -4,21 +4,26 @@
  */
 
 apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'signing'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 
-sourceCompatibility = 1.6
-targetCompatibility = 1.6
+plugins.withType(JavaPlugin) {
+    sourceCompatibility = 1.6
+    targetCompatibility = 1.6
 
-tasks.withType(Compile).all {
-    // enable all warnings as errors
-    options.compilerArgs << "-Xlint:{all}" << "-Werror"
-    options.encoding = "UTF-8"
-    options.optimize = true
+    tasks.withType(Compile).all {
+        // enable all warnings as errors
+        options.compilerArgs << "-Xlint:{all}" << "-Werror"
+        options.encoding = 'UTF-8'
+    }
 }
 
 group   = 'com.pieceof8.gradle'
 version = '0.4.0-SNAPSHOT'
+
+def isReleaseVersion = !version.endsWith('SNAPSHOT')
 
 repositories {
     mavenCentral()
@@ -28,6 +33,7 @@ repositories {
 }
 
 configurations {
+    deployerJars
     provided
     testProvided { extendsFrom provided }
 }
@@ -38,17 +44,19 @@ sourceSets {
 }
 
 dependencies {
-    provided group: 'org.projectlombok', name: 'lombok', version: '0.11.2'
+    deployerJars group: 'org.apache.maven.wagon', name: 'wagon-ssh', version: '1.0-beta-2'
+
+    provided group: 'org.projectlombok', name: 'lombok', version: '0.11.6'
     compile gradleApi()
 
     compile(
-        [group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '2.0.0.201206130900-r'],
+        [group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '2.1.0.201209190230-r'],
         [group: 'org.tmatesoft.hg4j', name: 'hg4j', version: '1.0.0']
     )
 
     testCompile(
-        [group: 'junit', name: 'junit', version: '4.10'],
-        [group: 'org.hamcrest', name: 'hamcrest-library', version: '1.2.1']
+        [group: 'junit', name: 'junit', version: '4.11'],
+        [group: 'org.hamcrest', name: 'hamcrest-library', version: '1.3']
     )
 }
 
@@ -64,6 +72,34 @@ jar {
     }
 }
 
+javadoc {
+    classpath += configurations.provided
+}
+
+task sourceJar(type: Jar, dependsOn: classes) {
+    baseName = project.name
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    baseName = project.name
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives jar
+    archives sourceJar
+    archives javadocJar
+}
+
+signing {
+    if (isReleaseVersion) {
+        sign configurations.archives
+    }
+}
+
 eclipse {
     project {
         name = 'gradle-snapshot-plugin'
@@ -71,4 +107,107 @@ eclipse {
     }
 
     classpath { plusConfigurations += configurations.provided }
+}
+
+idea {
+    module { scopes.PROVIDED.plus += configurations.provided }
+
+    project.ipr {
+        withXml { provider ->
+            provider.node.component.find { it.@name == 'VcsDirectoryMappings' }.mapping.@vcs = 'Git'
+        }
+    }
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { deployment ->
+                signing.signPom(deployment)
+            }
+
+            if (isReleaseVersion) {
+                repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2') {
+                    authentication(userName: sonatypeUsername, password: sonatypePassword)
+                }
+            } else {
+                repository(url: 'https://oss.sonatype.org/content/repositories/snapshots') {
+                    authentication(userName: sonatypeUsername, password: sonatypePassword)
+                }
+            }
+
+            // create the pom from the file generated in the generatePom task
+            pom.withXml { provider ->
+                def builder = provider.asString()
+                builder.length = 0 // delete previous content
+                builder << project.file("$buildDir/pom.xml").getText("utf-8")
+            } 
+        }
+    }
+}
+uploadArchives.dependsOn ':build', ':generatePom'
+
+/**
+ * Generate a Maven pom.xml for use at build time. Dependency information will
+ * be based on Gradle metadata for the project, and other customizations such
+ * as licensing information and source compatibility settings are configured
+ * within.
+ */
+task generatePom {
+    group = 'Build'
+    description = 'Generates a Maven POM file suitable for use in deploying the project'
+
+    def generatedPomFileName = 'pom.xml'
+
+    // ensure changes in the classpath trigger regeneration of poms
+    inputs.files(project.sourceSets.main.compileClasspath)
+
+    // enable partial cleaning with `gradle cleanGeneratePom`
+    outputs.files("$buildDir/$generatedPomFileName")
+
+    doLast() {
+        // configure basic POM information
+        def p = pom {
+            project {
+                groupId project.group
+                artifactId 'gradle-snapshot-plugin'
+                version project.version
+                packaging 'jar'
+                name 'Gradle Snapshot Plugin'
+                description 'Snapshot plugin for the Gradle build system.'
+                url 'http://github.com/PieceOf8/gradle-snapshot-plugin'
+                inceptionYear '2012'
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution 'repo'
+                    }
+                }
+                scm {
+                    url 'http://github.com/PieceOf8/gradle-snapshot-plugin'
+                    connection 'scm:git://github.com/PieceOf8/gradle-snapshot-plugin.git'
+                    developerConnection 'scm:git@github.com:PieceOf8/gradle-snapshot-plugin.git'
+                }
+                developers {
+                    developer {
+                        id 'novabyte'
+                        name 'Chris Molozian'
+                        email 'chris@pieceof8.com'
+                    }
+                }
+            }
+        }
+
+        // mark all compile dependencies as optional
+        p.whenConfigured { generatedPom ->
+            generatedPom.dependencies.each { mavenDep ->
+                if (mavenDep.scope == 'compile') {
+                    mavenDep.optional = true
+                }
+            }
+        }
+
+        p.writeTo("$buildDir/$generatedPomFileName")
+    }
 }

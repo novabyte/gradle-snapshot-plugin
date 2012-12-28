@@ -1,4 +1,5 @@
 ## build system files
+gradle.properties
 gradle-app.setting
 .gradle
 build
