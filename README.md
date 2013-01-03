@@ -1,4 +1,4 @@
-![Gradle Snapshot Plugin](https://raw.github.com/PieceOf8/gradle-snapshot-plugin/master/buildSrc/src/site/images/snapshot-logo.png)
+![Gradle Snapshot Plugin](https://raw.github.com/PieceOf8/gradle-snapshot-plugin/master/src/site/images/snapshot-logo.png)
 
 # Gradle Snapshot Plugin
 
