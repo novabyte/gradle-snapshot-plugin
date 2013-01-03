@@ -32,7 +32,7 @@ buildscript {
     dependencies {
         classpath(
             [group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '2.1.0.201209190230-r'],
-            [group: 'PieceOf8', name: 'gradle-snapshot-plugin', version: '1.0.0']
+            [group: 'com.pieceof8.gradle', name: 'gradle-snapshot-plugin', version: '1.0.0']
         )
     }
 }
@@ -53,7 +53,7 @@ buildscript {
     dependencies {
         classpath(
             [group: 'org.tmatesoft.hg4j', name: 'hg4j', version: '1.0.0'],
-            [group: 'PieceOf8', name: 'gradle-snapshot-plugin', version: '1.0.0']
+            [group: 'com.pieceof8.gradle', name: 'gradle-snapshot-plugin', version: '1.0.0']
         )
     }
 }
@@ -78,7 +78,7 @@ buildscript {
     dependencies {
         classpath(
             [group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '2.1.0.201209190230-r'],
-            [group: 'PieceOf8', name: 'gradle-snapshot-plugin', version: '1.0.0']
+            [group: 'com.pieceof8.gradle', name: 'gradle-snapshot-plugin', version: '1.0.0']
         )
     }
 }
