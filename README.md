@@ -28,15 +28,11 @@ To use the plugin add the following to your `build.gradle` script with Git SCM s
 buildscript {
     repositories {
         mavenCentral()
-        add(new org.apache.ivy.plugins.resolver.URLResolver()) {
-            name = 'GitHub'
-addArtifactPattern 'http://cloud.github.com/downloads/[organisation]/[module]/[module]-[revision].[ext]'
-        }
     }
     dependencies {
         classpath(
-            [group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '2.0.0.201206130900-r'],
-            [group: 'PieceOf8', name: 'gradle-snapshot-plugin', version: '0.3.0']
+            [group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '2.1.0.201209190230-r'],
+            [group: 'PieceOf8', name: 'gradle-snapshot-plugin', version: '1.0.0']
         )
     }
 }
@@ -51,18 +47,13 @@ A complete example including some configurable options for a Mercurial SCM repos
 ```groovy
 buildscript {
     repositories {
-        maven {
-            url 'http://maven.tmatesoft.com/content/repositories/releases/'
-        }
-        add(new org.apache.ivy.plugins.resolver.URLResolver()) {
-            name = 'GitHub'
-addArtifactPattern 'http://cloud.github.com/downloads/[organisation]/[module]/[module]-[revision].[ext]'
-        }
+        mavenCentral()
+        maven { url 'http://maven.tmatesoft.com/content/repositories/releases/' }
     }
     dependencies {
         classpath(
             [group: 'org.tmatesoft.hg4j', name: 'hg4j', version: '1.0.0'],
-            [group: 'PieceOf8', name: 'gradle-snapshot-plugin', version: '0.3.0']
+            [group: 'PieceOf8', name: 'gradle-snapshot-plugin', version: '1.0.0']
         )
     }
 }
@@ -83,15 +74,11 @@ Snapshot makes all the properties recorded to the 'snapshot.properties' file als
 buildscript {
     repositories {
         mavenCentral()
-        add(new org.apache.ivy.plugins.resolver.URLResolver()) {
-            name = 'GitHub'
-addArtifactPattern 'http://cloud.github.com/downloads/[organisation]/[module]/[module]-[revision].[ext]'
-        }
     }
     dependencies {
         classpath(
-            [group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '2.0.0.201206130900-r'],
-            [group: 'PieceOf8', name: 'gradle-snapshot-plugin', version: '0.3.0']
+            [group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '2.1.0.201209190230-r'],
+            [group: 'PieceOf8', name: 'gradle-snapshot-plugin', version: '1.0.0']
         )
     }
 }
@@ -108,7 +95,7 @@ jar {
 
 ### Real World Example
 
-If you're not sure how to integrate this code into your build script have a look at the [`build.gradle`](https://github.com/PieceOf8/gradle-snapshot-plugin/blob/master/testProject/gitProject/build.gradle) for one of the test projects for the Snapshot plugin.
+If you're not sure how to integrate this code into your build script have a look at the [`build.gradle`](https://github.com/PieceOf8/gradle-snapshot-plugin/blob/master/src/test/resources/testProject/gitProject/build.gradle) for one of the test projects for the Snapshot plugin.
 
 
 ## Configuration

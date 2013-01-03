@@ -12,15 +12,13 @@ group = 'com.pieceof8.gradle.snapshot.test'
 def snapshotTask = tasks.getByName(SnapshotPlugin.SNAPSHOT_TASK_NAME)
 
 // workaround because Git won't version control a '.git' folder.
-task makeGitRepo << {
+snapshotTask.doFirst {
     file('.git').mkdirs()
     copy {
         from 'git'
         into '.git'
     }
 }
-
-snapshotTask.dependsOn makeGitRepo
 
 snapshotTask.doLast {
     delete '.git'

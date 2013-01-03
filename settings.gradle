@@ -1,7 +1,0 @@
-/**
- * Configuration for all projects that are to participate in the build.
- */
-
-rootProject.name = 'gradle-snapshot-plugin'
-
-include 'testProject:gitProject', 'testProject:hgProject'

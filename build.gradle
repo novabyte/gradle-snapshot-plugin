@@ -136,39 +136,8 @@ uploadArchives {
                 }
             }
 
-            // create the pom from the file generated in the generatePom task
-            pom.withXml { provider ->
-                def builder = provider.asString()
-                builder.length = 0 // delete previous content
-                builder << project.file("$buildDir/pom.xml").getText("utf-8")
-            } 
-        }
-    }
-}
-uploadArchives.dependsOn ':build', ':generatePom'
-
-/**
- * Generate a Maven pom.xml for use at build time. Dependency information will
- * be based on Gradle metadata for the project, and other customizations such
- * as licensing information and source compatibility settings are configured
- * within.
- */
-task generatePom {
-    group = 'Build'
-    description = 'Generates a Maven POM file suitable for use in deploying the project'
-
-    def generatedPomFileName = 'pom.xml'
-
-    // ensure changes in the classpath trigger regeneration of poms
-    inputs.files(project.sourceSets.main.compileClasspath)
-
-    // enable partial cleaning with `gradle cleanGeneratePom`
-    outputs.files("$buildDir/$generatedPomFileName")
-
-    doLast() {
-        // configure basic POM information
-        def p = pom {
-            project {
+            // configure basic POM information
+            pom.project {
                 groupId project.group
                 artifactId 'gradle-snapshot-plugin'
                 version project.version
@@ -197,17 +166,16 @@ task generatePom {
                     }
                 }
             }
-        }
 
-        // mark all compile dependencies as optional
-        p.whenConfigured { generatedPom ->
-            generatedPom.dependencies.each { mavenDep ->
-                if (mavenDep.scope == 'compile') {
-                    mavenDep.optional = true
+            // mark all compile dependencies as optional
+            pom.whenConfigured { generatedPom ->
+                generatedPom.dependencies.each { mavenDep ->
+                    if (mavenDep.scope == 'compile') {
+                        mavenDep.optional = true
+                    }
                 }
             }
         }
-
-        p.writeTo("$buildDir/$generatedPomFileName")
     }
 }
+uploadArchives.dependsOn ':build'
