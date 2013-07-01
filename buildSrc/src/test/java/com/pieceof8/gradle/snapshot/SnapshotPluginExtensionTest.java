@@ -47,19 +47,4 @@ public class SnapshotPluginExtensionTest {
         assertFalse(ext.isVerbose());
     }
 
-/* TODO: overwrite default extension properties from build script
-    @Test
-    public void custom_configuration_is_applied() {
-        SnapshotPluginExtension ext = new SnapshotPluginExtension(project);
-        ext.setFilename("git.properties");
-        ext.setDateFormat("hh 'o''clock' a, zzzz");
-        ext.setVerbose(true);
-        project.getExtensions().add("snapshot", ext);
-
-        SnapshotPluginExtension ext1 = project.getExtensions()
-                .getByType(SnapshotPluginExtension.class);
-        assertSame(ext1.getFilename(), "git.properties");
-    }
-*/
-
 }

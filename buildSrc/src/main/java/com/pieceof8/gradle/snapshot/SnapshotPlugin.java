@@ -29,7 +29,7 @@ import lombok.*;
 
 /**
  * A Gradle plugin to generate build-time metadata from Source Control
- * Management (SCM) tools. 
+ * Management (SCM) tools.
  */
 public class SnapshotPlugin implements Plugin<Project> {
 
