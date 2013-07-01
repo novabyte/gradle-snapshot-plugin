@@ -8,9 +8,10 @@ It takes the most recent commit from the SCM repository and generates a [`.prope
 
 Snapshot integrates with the [Java](http://www.gradle.org/docs/current/userguide/java_plugin.html) and [War](http://gradle.org/docs/current/userguide/war_plugin.html) plugins from Gradle's core plugins to make packaging the generated file output very easy (auto-managed).
 
-This plugin recognises Git repositories (via the [JGit](http://eclipse.org/jgit/) library) and Mercurial repositories (via the [Hg4j]() library). Support for other SCM repositories will be added upon request (or even better send us your pull request! =P), only SCMs that have a Java library to communicate with it's repository layout can be included.
+This plugin recognises Git repositories (via the [JGit](http://eclipse.org/jgit/) library) and Mercurial repositories (via the [Hg4j](http://hg4j.com/) library). Support for other SCM repositories will be added upon request (or even better send us your pull request! =P), only SCMs that have a Java library to communicate with it's repository layout can be included.
 
-The Gradle Snapshot Plugin is considered feature complete. It depends on the plugin API from __Gradle 1.0__ or greater. You can report bugs and suggest new features on the [issues](https://github.com/PieceOf8/gradle-snapshot-plugin/issues) page.
+The Gradle Snapshot Plugin is considered feature complete. It depends on the
+plugin API from __Gradle 1.6__ or greater. You can report bugs and suggest new features on the [issues](https://github.com/PieceOf8/gradle-snapshot-plugin/issues) page.
 
 <br/>
 Gradle Snapshot Plugin is an open-source component from Piece of 8. <br/>It's created and maintained by Chris Molozian (@novabyte). <br/>Code licensed under the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0). Documentation licensed under [CC BY 3.0](http://creativecommons.org/licenses/by/3.0/).
@@ -31,7 +32,7 @@ buildscript {
     }
     dependencies {
         classpath(
-            [group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '2.1.0.201209190230-r'],
+            [group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '3.0.0.201306101825-r'],
             [group: 'com.pieceof8.gradle', name: 'gradle-snapshot-plugin', version: '1.0.0']
         )
     }
@@ -52,7 +53,7 @@ buildscript {
     }
     dependencies {
         classpath(
-            [group: 'org.tmatesoft.hg4j', name: 'hg4j', version: '1.0.0'],
+            [group: 'org.tmatesoft.hg4j', name: 'hg4j', version: '1.1.0'],
             [group: 'com.pieceof8.gradle', name: 'gradle-snapshot-plugin', version: '1.0.0']
         )
     }
@@ -77,7 +78,7 @@ buildscript {
     }
     dependencies {
         classpath(
-            [group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '2.1.0.201209190230-r'],
+            [group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '3.0.0.201306101825-r'],
             [group: 'com.pieceof8.gradle', name: 'gradle-snapshot-plugin', version: '1.0.0']
         )
     }
@@ -173,6 +174,7 @@ build.time           = dd.MM.yyyy '@' HH:mm:ss z
 
 All contributions to the documentation and the codebase are very welcome.
 
-This plugin is written in Java and can be built using version `1.0` or greater of Gradle.
+This plugin is written in Java and can be built using version `1.6` or
+greater of Gradle.
 
 Send us your pull requests! `:)`
