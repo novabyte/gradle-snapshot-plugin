@@ -13,9 +13,13 @@ plugins.withType(JavaPlugin) {
     sourceCompatibility = 1.6
     targetCompatibility = 1.6
 
-    tasks.withType(Compile).all {
+    tasks.withType(JavaCompile).all {
         // enable all warnings as errors
-        options.compilerArgs << "-Xlint:{all}" << "-Werror"
+        options.compilerArgs = [
+            "-Xlint:{cast,deprecation,divzero,empty,unchecked,fallthrough,path,serial,finally,overrides}",
+            "-Werror",
+            "-XprintProcessorInfo"
+        ]
         options.encoding = 'UTF-8'
     }
 }
@@ -44,14 +48,14 @@ sourceSets {
 }
 
 dependencies {
-    deployerJars group: 'org.apache.maven.wagon', name: 'wagon-ssh', version: '1.0-beta-2'
+    deployerJars group: 'org.apache.maven.wagon', name: 'wagon-ssh', version: '2.4'
 
-    provided group: 'org.projectlombok', name: 'lombok', version: '0.11.6'
+    provided group: 'org.projectlombok', name: 'lombok', version: '0.11.8'
     compile gradleApi()
 
     compile(
-        [group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '2.1.0.201209190230-r'],
-        [group: 'org.tmatesoft.hg4j', name: 'hg4j', version: '1.0.0']
+        [group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '3.0.0.201306101825-r'],
+        [group: 'org.tmatesoft.hg4j', name: 'hg4j', version: '1.1.0']
     )
 
     testCompile(
