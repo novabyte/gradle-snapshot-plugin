@@ -26,6 +26,7 @@ import lombok.*;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
+import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskAction;
 
 /**
@@ -42,7 +43,7 @@ class SnapshotTask extends DefaultTask {
     private final @NonNull SnapshotPluginExtension extension;
 
     /** The properties to store build information collected from the SCM. */
-    @Getter
+    @Getter @OutputFile
     private final @NonNull File snapshotFile;
 
     /**
