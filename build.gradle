@@ -1,0 +1,57 @@
+/**
+ * A Gradle plugin to generate build metadata from Source Control Management (SCM) tools.
+ */
+
+apply plugin: 'groovy'
+apply plugin: 'idea'
+
+group = 'me.cmoz.gradle'
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'http://maven.tmatesoft.com/content/repositories/releases/'
+    }
+}
+
+configurations {
+    providedCompile
+}
+
+sourceSets {
+    main {
+        compileClasspath += configurations.providedCompile
+    }
+
+    test {
+        compileClasspath += configurations.providedCompile
+    }
+}
+
+dependencies {
+    providedCompile(
+        [group: 'org.projectlombok', name: 'lombok', version: '1.14.4'],
+        [group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.0']
+    )
+
+    compile(
+        gradleApi(),
+        [group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '3.4.1.201406201815-r'],
+        [group: 'org.tmatesoft.hg4j', name: 'hg4j', version: '1.1.0']
+    )
+
+    testCompile(
+        localGroovy(),
+        [group: 'junit', name: 'junit', version: '4.11'],
+        [group: 'org.hamcrest', name: 'hamcrest-library', version: '1.3']
+    )
+}
+
+jar {
+    manifest {
+        from "$projectDir/src/main/resources/META-INF/MANIFEST.MF"
+        attributes 'Implementation-Title': project.name,
+                   'Created-By': "Gradle $gradle.gradleVersion",
+                   'Build-Jdk': System.properties['java.version']
+    }
+}

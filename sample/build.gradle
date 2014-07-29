@@ -1,0 +1,29 @@
+/**
+ * An example of using the Gradle Snapshot plugin in a project.
+ */
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url 'http://maven.tmatesoft.com/content/repositories/releases/'
+        }
+    }
+
+    dependencies {
+        classpath(
+            files('../build/libs/gradle-snapshot-plugin.jar'),
+            [group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '3.4.1.201406201815-r'],
+            [group: 'org.tmatesoft.hg4j', name: 'hg4j', version: '1.1.0']
+        )
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'snapshot'
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'me.cmoz.gradle.snapshot.sample.Main'
+    }
+}
