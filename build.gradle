@@ -3,9 +3,11 @@
  */
 
 apply plugin: 'groovy'
+apply plugin: 'maven-publish'
 apply plugin: 'idea'
 
-group = 'me.cmoz.gradle'
+group   = 'me.cmoz.gradle'
+version = '2.0.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -49,9 +51,66 @@ dependencies {
 
 jar {
     manifest {
-        from "$projectDir/src/main/resources/META-INF/MANIFEST.MF"
         attributes 'Implementation-Title': project.name,
+                   'Implementation-Version': project.version,
                    'Created-By': "Gradle $gradle.gradleVersion",
                    'Build-Jdk': System.properties['java.version']
+    }
+}
+
+javadoc {
+    classpath += configurations.providedCompile
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+
+            artifact sourceJar {
+                classifier "sources"
+            }
+
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('name', 'Gradle Snapshot Plugin')
+                root.appendNode('description', 'Snapshot plugin for the Gradle build system.')
+                root.appendNode('url', 'http://github.com/novabyte/gradle-snapshot-plugin')
+                root.appendNode('inceptionYear', '2012')
+
+                def developer = root.appendNode('developers').appendNode('developer')
+                developer.appendNode('id', 'novabyte')
+                developer.appendNode('name', 'Chris Molozian')
+                developer.appendNode('email', 'chris@cmoz.me')
+
+                def scm = root.appendNode('scm')
+                scm.appendNode('url', 'http://github.com/novabyte/gradle-snapshot-plugin')
+                scm.appendNode('connection', 'scm:git://github.com/novabyte/gradle-snapshot-plugin.git')
+                scm.appendNode('developerConnection', 'scm:git@github.com:novabyte/gradle-snapshot-plugin.git')
+
+                def license = root.appendNode('licenses').appendNode('license')
+                license.appendNode('name', 'The Apache Software License, Version 2.0')
+                license.appendNode('url', 'http://www.apache.org/licenses/LICENSE-2.0.txt')
+                license.appendNode('distribution', 'repo')
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            credentials {
+                username project.properties['sonatypeUsername']
+                password project.properties['sonatypePassword']
+            }
+            if (!version.endsWith('SNAPSHOT')) {
+                url 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+            } else {
+                url 'https://oss.sonatype.org/content/repositories/snapshots'
+            }
+        }
     }
 }

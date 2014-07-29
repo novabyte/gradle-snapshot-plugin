@@ -12,7 +12,7 @@ buildscript {
 
     dependencies {
         classpath(
-            files('../build/libs/gradle-snapshot-plugin.jar'),
+            fileTree(dir: '../build/libs', include: '*.jar'),
             [group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '3.4.1.201406201815-r'],
             [group: 'org.tmatesoft.hg4j', name: 'hg4j', version: '1.1.0']
         )
@@ -21,6 +21,10 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'snapshot'
+
+snapshot {
+    verbose = Boolean.TRUE
+}
 
 jar {
     manifest {
