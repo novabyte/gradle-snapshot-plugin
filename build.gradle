@@ -49,6 +49,19 @@ dependencies {
     )
 }
 
+compileJava {
+    sourceCompatibility = '1.6'
+    targetCompatibility = '1.6'
+    options.compilerArgs = [
+        // enable all warnings as errors
+        '-Xlint:cast,deprecation,divzero,empty,unchecked,fallthrough,path,serial,finally,overrides,-options',
+        '-Werror',
+        '-XprintProcessorInfo'
+    ]
+    options.encoding = 'UTF-8'
+    options.fork = true
+}
+
 jar {
     manifest {
         attributes 'Implementation-Title': project.name,
