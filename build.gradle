@@ -3,6 +3,7 @@
  */
 
 apply plugin: 'groovy'
+apply plugin: 'signing'
 apply plugin: 'maven-publish'
 apply plugin: 'idea'
 
@@ -77,6 +78,12 @@ javadoc {
 
 task sourceJar(type: Jar) {
     from sourceSets.main.allJava
+}
+
+signing {
+    if (!version.endsWith('SNAPSHOT')) {
+        sign configurations.archives
+    }
 }
 
 publishing {
