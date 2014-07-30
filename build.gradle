@@ -76,6 +76,10 @@ javadoc {
     classpath += configurations.providedCompile
 }
 
+task javadocJar(type: Jar) {
+    from javadoc
+}
+
 task sourceJar(type: Jar) {
     from sourceSets.main.allJava
 }
@@ -91,8 +95,12 @@ publishing {
         maven(MavenPublication) {
             from components.java
 
+            artifact javadocJar {
+                classifier 'javadoc'
+            }
+
             artifact sourceJar {
-                classifier "sources"
+                classifier 'sources'
             }
 
             pom.withXml {
