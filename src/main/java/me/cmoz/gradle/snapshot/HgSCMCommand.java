@@ -26,6 +26,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * An {@code SCMCommand} for the Mercurial Source Control Management (SCM) tool.
+ */
 class HgSCMCommand implements SCMCommand {
 
     private static final String REPO_DIRNAME = ".hg";

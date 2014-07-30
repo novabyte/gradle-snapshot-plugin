@@ -18,11 +18,29 @@ package me.cmoz.gradle.snapshot;
 import javax.annotation.Nullable;
 import java.io.File;
 
+/**
+ * A command to access a Source Control Management (SCM) Repository.
+ */
 public interface SCMCommand {
 
+    /**
+     * Returns a {@code File} of the directory for the repository of the SCM
+     * tool.
+     *
+     * @return The directory of the SCM repository, may be {@code null} if no
+     *         SCM directory could be found.
+     */
     @Nullable
     File getRepositoryDir();
 
+    /**
+     * Analyses the latest commit in the SCM repository and returns it's
+     * information as an {@code Commit}.
+     *
+     * @param dateFormat The format of the dates in the commit.
+     * @return The {@code Commit} reported by the SCM for most recent commit
+     *         information.
+     */
     Commit getLatestCommit(final String dateFormat);
 
 }

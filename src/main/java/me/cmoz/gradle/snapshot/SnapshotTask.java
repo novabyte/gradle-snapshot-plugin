@@ -29,6 +29,10 @@ import java.util.Properties;
 
 import static java.util.Map.Entry;
 
+/**
+ * A task to extract build information from an SCM repository and generate a
+ * file with the most recent commit data.
+ */
 public class SnapshotTask extends DefaultTask {
 
     /** An output label for the properties file. */
@@ -37,6 +41,13 @@ public class SnapshotTask extends DefaultTask {
             + SnapshotTask.class.getPackage().getImplementationVersion()
             + ")";
 
+    /**
+     * The main action for this task.
+     *
+     * <p>The task generates metadata from the SCM for the most recent commit
+     * and stores it to the {@code snapshot} file location for storing with
+     * JAR and WAR packages.
+     */
     @TaskAction
     @SneakyThrows(IOException.class)
     public void action() {
@@ -66,6 +77,14 @@ public class SnapshotTask extends DefaultTask {
         properties.store(new FileWriter(output), BUILD_LABEL);
     }
 
+    /**
+     * Searches the project directory for a repository directory that belongs
+     * to a supported SCM tool. If one is found the associated {@code SCMCommand}
+     * will be returned to interact with it.
+     *
+     * @return The {@code SCMCommand} to interact with the SCM repository for
+     *         the project, if one could be found.
+     */
     @Nullable
     private SCMCommand getSCMCommand() {
         SCMCommand scmCmd = new HgSCMCommand(getProject());

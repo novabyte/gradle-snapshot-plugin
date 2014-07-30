@@ -30,6 +30,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * An {@code SCMCommand} for the Git Source Control Management (SCM) tool.
+ */
 class GitSCMCommand implements SCMCommand {
 
     private static final String REPO_DIRNAME = ".git";
