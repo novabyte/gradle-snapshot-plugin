@@ -57,7 +57,8 @@ class SnapshotTaskGitTest {
         }
 
         def properties = new Properties()
-        def snapshot = new File(project.buildDir, SnapshotPluginExtension.DEFAULT_FILENAME)
+        def outputDir = new File(project.buildDir, "snapshot")
+        def snapshot = new File(outputDir, SnapshotPluginExtension.DEFAULT_FILENAME)
         properties.load(new FileReader(snapshot))
 
         assertEquals("d38aade", properties.get(Commit.ID_ABBREV));

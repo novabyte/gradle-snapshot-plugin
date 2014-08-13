@@ -22,7 +22,10 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.Copy;
+import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.TaskContainer;
+
+import java.io.File;
 
 public final class SnapshotPlugin implements Plugin<Project> {
 
@@ -48,11 +51,12 @@ public final class SnapshotPlugin implements Plugin<Project> {
         project.getPlugins().withType(JavaPlugin.class, new Action<JavaPlugin>() {
             @Override
             public void execute(final JavaPlugin plugin) {
+                final File outputDir = new File(project.getBuildDir(), "snapshot");
+                final SourceSetContainer sourceSets =
+                        (SourceSetContainer) project.getProperties().get("sourceSets");
+                sourceSets.getByName("main").getResources().srcDir(outputDir);
+
                 final Task t = tasks.getByName(JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
-                if (t instanceof Copy) {
-                    final Copy copy = (Copy) t;
-                    copy.from(project.getBuildDir()).include(ext.getFilename());
-                }
                 t.dependsOn(task);
             }
         });

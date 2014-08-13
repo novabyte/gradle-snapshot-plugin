@@ -72,8 +72,9 @@ public class SnapshotTask extends DefaultTask {
         }
         properties.putAll(commitMap);
 
-        final File output = new File(getProject().getBuildDir(), ext.getFilename());
-        output.getParentFile().mkdirs();
+        final File outputDir = new File(getProject().getBuildDir(), "snapshot");
+        outputDir.mkdirs();
+        final File output = new File(outputDir, ext.getFilename());
         properties.store(new FileWriter(output), BUILD_LABEL);
     }
 
