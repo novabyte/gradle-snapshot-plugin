@@ -4,11 +4,11 @@
 
 apply plugin: 'groovy'
 apply plugin: 'signing'
-apply plugin: 'maven-publish'
+apply plugin: 'maven'
 apply plugin: 'idea'
 
 group   = 'me.cmoz.gradle'
-version = '2.0.0-SNAPSHOT'
+version = '2.0.1-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -76,12 +76,22 @@ javadoc {
     classpath += configurations.providedCompile
 }
 
-task javadocJar(type: Jar) {
-    from javadoc
+task sourceJar(type: Jar, dependsOn: classes) {
+    baseName = project.name
+    classifier = 'sources'
+    from sourceSets.main.allSource
 }
 
-task sourceJar(type: Jar) {
-    from sourceSets.main.allJava
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    baseName = project.name
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives jar
+    archives sourceJar
+    archives javadocJar
 }
 
 signing {
@@ -90,55 +100,52 @@ signing {
     }
 }
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            from components.java
-
-            artifact javadocJar {
-                classifier 'javadoc'
-            }
-
-            artifact sourceJar {
-                classifier 'sources'
-            }
-
-            pom.withXml {
-                def root = asNode()
-                root.appendNode('name', 'Gradle Snapshot Plugin')
-                root.appendNode('description', 'Snapshot plugin for the Gradle build system.')
-                root.appendNode('url', 'http://github.com/novabyte/gradle-snapshot-plugin')
-                root.appendNode('inceptionYear', '2012')
-
-                def developer = root.appendNode('developers').appendNode('developer')
-                developer.appendNode('id', 'novabyte')
-                developer.appendNode('name', 'Chris Molozian')
-                developer.appendNode('email', 'chris@cmoz.me')
-
-                def scm = root.appendNode('scm')
-                scm.appendNode('url', 'http://github.com/novabyte/gradle-snapshot-plugin')
-                scm.appendNode('connection', 'scm:git://github.com/novabyte/gradle-snapshot-plugin.git')
-                scm.appendNode('developerConnection', 'scm:git@github.com:novabyte/gradle-snapshot-plugin.git')
-
-                def license = root.appendNode('licenses').appendNode('license')
-                license.appendNode('name', 'The Apache Software License, Version 2.0')
-                license.appendNode('url', 'http://www.apache.org/licenses/LICENSE-2.0.txt')
-                license.appendNode('distribution', 'repo')
-            }
-        }
-    }
-
+uploadArchives {
     repositories {
-        maven {
-            credentials {
-                username project.properties['sonatypeUsername']
-                password project.properties['sonatypePassword']
+        mavenDeployer {
+            beforeDeployment { deployment ->
+                signing.signPom(deployment)
             }
             if (!version.endsWith('SNAPSHOT')) {
-                url 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+                repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2') {
+                    authentication(userName: sonatypeUsername, password: sonatypePassword)
+                }
             } else {
-                url 'https://oss.sonatype.org/content/repositories/snapshots'
+                repository(url: 'https://oss.sonatype.org/content/repositories/snapshots') {
+                    authentication(userName: sonatypeUsername, password: sonatypePassword)
+                }
+            }
+            // configure basic POM information
+            pom.project {
+                groupId project.group
+                artifactId 'gradle-snapshot-plugin'
+                version project.version
+                packaging 'jar'
+                name 'Gradle Snapshot Plugin'
+                description 'Snapshot plugin for the Gradle build system.'
+                url 'http://github.com/novabyte/gradle-snapshot-plugin'
+                inceptionYear '2012'
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution 'repo'
+                    }
+                }
+                scm {
+                    url 'http://github.com/novabyte/gradle-snapshot-plugin'
+                    connection 'scm:git://github.com/novabyte/gradle-snapshot-plugin.git'
+                    developerConnection 'scm:git@github.com:novabyte/gradle-snapshot-plugin.git'
+                }
+                developers {
+                    developer {
+                        id 'novabyte'
+                        name 'Chris Molozian'
+                        email 'chris@cmoz.me'
+                    }
+                }
             }
         }
     }
 }
+uploadArchives.dependsOn ':build'
