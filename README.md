@@ -30,7 +30,7 @@ buildscript {
     }
     dependencies {
         classpath(
-            [group: 'me.cmoz.gradle', name: 'gradle-snapshot-plugin', version: '2.0.0']
+            [group: 'me.cmoz.gradle', name: 'gradle-snapshot-plugin', version: '2.0.1']
         )
     }
 }
@@ -49,7 +49,7 @@ buildscript {
     }
     dependencies {
         classpath(
-            [group: 'me.cmoz.gradle', name: 'gradle-snapshot-plugin', version: '2.0.0']
+            [group: 'me.cmoz.gradle', name: 'gradle-snapshot-plugin', version: '2.0.1']
         )
     }
 }
@@ -73,7 +73,7 @@ buildscript {
     }
     dependencies {
         classpath(
-            [group: 'me.cmoz.gradle', name: 'gradle-snapshot-plugin', version: '2.0.0']
+            [group: 'me.cmoz.gradle', name: 'gradle-snapshot-plugin', version: '2.0.1']
         )
     }
 }
