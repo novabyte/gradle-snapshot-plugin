@@ -61,10 +61,10 @@ class SnapshotTaskGitTest {
         def snapshot = new File(outputDir, SnapshotPluginExtension.DEFAULT_FILENAME)
         properties.load(new FileReader(snapshot))
 
-        assertEquals("d38aade", properties.get(Commit.ID_ABBREV));
-        assertEquals("d38aade25e358ee9ce436e665e321a09d99c041e", properties.get(Commit.ID))
+        assertEquals("7c25255", properties.get(Commit.ID_ABBREV));
+        assertEquals("7c252556ba9471b42ec648fb2d27df464e5d4ad8", properties.get(Commit.ID))
         assertEquals("chris@cmoz.me", properties.get(Commit.USER_EMAIL))
-        assertEquals("Test commit.", properties.get(Commit.MESSAGE_FULL))
+        assertEquals("Test commit. Updated README", properties.get(Commit.MESSAGE_FULL))
         assertEquals("Test commit", properties.get(Commit.MESSAGE_SHORT))
         assertEquals("Chris Molozian", properties.get(Commit.USER_NAME))
         assertEquals("master", properties.get(Commit.BRANCH))
@@ -80,10 +80,10 @@ class SnapshotTaskGitTest {
         }
 
         def properties = project.getProperties();
-        assertEquals("d38aade", properties.get(Commit.ID_ABBREV));
-        assertEquals("d38aade25e358ee9ce436e665e321a09d99c041e", properties.get(Commit.ID))
+        assertEquals("7c25255", properties.get(Commit.ID_ABBREV));
+        assertEquals("7c252556ba9471b42ec648fb2d27df464e5d4ad8", properties.get(Commit.ID))
         assertEquals("chris@cmoz.me", properties.get(Commit.USER_EMAIL))
-        assertEquals("Test commit.", properties.get(Commit.MESSAGE_FULL))
+        assertEquals("Test commit. Updated README", properties.get(Commit.MESSAGE_FULL))
         assertEquals("Test commit", properties.get(Commit.MESSAGE_SHORT))
         assertEquals("Chris Molozian", properties.get(Commit.USER_NAME))
         assertEquals("master", properties.get(Commit.BRANCH))
