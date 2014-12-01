@@ -1,1 +1,3 @@
 0000000000000000000000000000000000000000 d38aade25e358ee9ce436e665e321a09d99c041e Chris Molozian <chris@cmoz.me> 1406644709 +0100	commit (initial): Test commit.
+d38aade25e358ee9ce436e665e321a09d99c041e 6890273719f48c7c7eca69d1d7ae2c823471b747 Chris Molozian <chris@cmoz.me> 1417428078 +0100	commit: Updated README
+6890273719f48c7c7eca69d1d7ae2c823471b747 7c252556ba9471b42ec648fb2d27df464e5d4ad8 Chris Molozian <chris@cmoz.me> 1417429147 +0100	commit (amend): Test commit. Updated README
