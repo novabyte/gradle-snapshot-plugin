@@ -19,6 +19,7 @@ import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.gradle.api.Project;
 import org.tmatesoft.hg.core.*;
+import org.tmatesoft.hg.repo.HgRepository;
 
 import javax.annotation.Nullable;
 import java.io.File;
@@ -57,8 +58,13 @@ class HgSCMCommand implements SCMCommand {
 
         final SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 
+        final int lastRevision = repo.getRepository().getChangelog().getLastRevision();
+        if (lastRevision == HgRepository.NO_REVISION) {
+            throw new RuntimeException("Could not find any changesets in Hg repository.");
+        }
+
         final HgLogCommand hgLogCommand = repo.createLogCommand();
-        hgLogCommand.limit(1);
+        hgLogCommand.range(lastRevision, lastRevision);
         final List<HgChangeset> changesets = hgLogCommand.execute();
         if (changesets.size() < 1) {
             throw new RuntimeException("Could not find any changesets in Hg repository.");
