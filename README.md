@@ -25,14 +25,13 @@ To use the plugin add the following to your `build.gradle` script with Git SCM s
 
 ```groovy
 buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath(
-            [group: 'me.cmoz.gradle', name: 'gradle-snapshot-plugin', version: '2.0.1']
-        )
-    }
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath(
+      [group: 'me.cmoz.gradle', name: 'gradle-snapshot-plugin', version: '2.0.2'])
+  }
 }
 
 apply plugin: 'snapshot'
@@ -44,21 +43,20 @@ A complete example including some configurable options for a Mercurial SCM repos
 
 ```groovy
 buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath(
-            [group: 'me.cmoz.gradle', name: 'gradle-snapshot-plugin', version: '2.0.1']
-        )
-    }
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath(
+      [group: 'me.cmoz.gradle', name: 'gradle-snapshot-plugin', version: '2.0.2'])
+  }
 }
 
 apply plugin: 'snapshot'
 
 snapshot {
-    filename   = 'snapshot.properties'          // default
-    dateFormat = "dd.MM.yyyy '@' HH:mm:ss z"    // default
+  filename   = 'snapshot.properties'          // default
+  dateFormat = "dd.MM.yyyy '@' HH:mm:ss z"    // default
 }
 ```
 
@@ -68,23 +66,22 @@ The plugin makes all the properties recorded in the `snapshot.properties` file a
 
 ```groovy
 buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath(
-            [group: 'me.cmoz.gradle', name: 'gradle-snapshot-plugin', version: '2.0.1']
-        )
-    }
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath(
+      [group: 'me.cmoz.gradle', name: 'gradle-snapshot-plugin', version: '2.0.2'])
+  }
 }
 
 apply plugin: 'snapshot'
 apply plugin: 'java'
 
 jar {
-    dependsOn snapshot
+  dependsOn snapshot
 
-    appendix project.ext.properties['commit.id.abbrev']
+  appendix project.ext.properties['commit.id.abbrev']
 }
 ```
 
@@ -92,16 +89,15 @@ jar {
 
 If you're not sure how to integrate this code into your build script have a look at the sample [`build.gradle`](https://github.com/novabyte/gradle-snapshot-plugin/tree/master/sample).
 
-
 ## Configuration
 
 All of the configuration options for the plugins are:
 
 ```groovy
 snapshot {
-    filename   = "snapshot.properties"          // default
-    dateFormat = "dd.MM.yyyy '@' HH:mm:ss z"    // default
-    verbose    = true
+  filename   = "snapshot.properties"          // default
+  dateFormat = "dd.MM.yyyy '@' HH:mm:ss z"    // default
+  verbose    = true
 }
 ```
 
