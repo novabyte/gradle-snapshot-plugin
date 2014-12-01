@@ -33,13 +33,13 @@ sourceSets {
 
 dependencies {
     providedCompile(
-        [group: 'org.projectlombok', name: 'lombok', version: '1.14.4'],
+        [group: 'org.projectlombok', name: 'lombok', version: '1.14.8'],
         [group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.0']
     )
 
     compile(
         gradleApi(),
-        [group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '3.4.1.201406201815-r'],
+        [group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '3.6.0.201411121045-m1'],
         [group: 'org.tmatesoft.hg4j', name: 'hg4j', version: '1.1.0']
     )
 
