@@ -169,3 +169,9 @@ build.time           = dd.MM.yyyy '@' HH:mm:ss z
 All contributions to the documentation and the codebase are very welcome. Send me your pull requests! `:)`
 
 This plugin is written in Java and can be built using version `1.6` or greater of Gradle.
+
+### Thanks
+
+Many thanks to the following developers for contributing to the codebase:
+
+* @FrantaM
