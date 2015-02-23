@@ -20,6 +20,10 @@ bin
 .classpath
 .project
 
+## netbeans metadata files
+.nb-gradle/private/
+.nb-gradle/profiles/private/
+
 ## generic files
 *~
 *.lock

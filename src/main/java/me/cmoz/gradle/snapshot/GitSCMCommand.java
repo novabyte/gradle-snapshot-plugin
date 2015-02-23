@@ -87,11 +87,12 @@ class GitSCMCommand implements SCMCommand {
             // git commit time in sec and java datetime is in ms
             final Date commitTime = new Date(revCommit.getCommitTime() * 1000L);
             final PersonIdent ident = revCommit.getAuthorIdent();
+            final UserConfig userConf = conf.get(UserConfig.KEY);
 
             return Commit.builder()
                     .buildTime(sdf.format(new Date()))
-                    .buildAuthorName(conf.getString("user", null, "name"))
-                    .buildAuthorEmail(conf.getString("user", null, "email"))
+                    .buildAuthorName(userConf.getAuthorName())
+                    .buildAuthorEmail(userConf.getAuthorEmail())
                     .branchName(repo.getBranch())
                     .commitId(revCommit.getName())
                     .commitTime(sdf.format(commitTime))
