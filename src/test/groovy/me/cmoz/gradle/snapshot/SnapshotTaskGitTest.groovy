@@ -73,6 +73,24 @@ class SnapshotTaskGitTest {
     }
 
     @Test
+    void "Properties are loaded from repository and not from old properties file"() {
+        /* given: */
+        def task = project.tasks[SnapshotPlugin.SNAPSHOT_TASK_NAME]
+        task.outputFile.with {
+            parentFile.mkdirs()
+            withWriter { out ->
+                out.writeLine "$Commit.ID_ABBREV=abcdf12"
+            }
+        }
+
+        /* when: */
+        task.execute()
+
+        /* then: */
+        assert project[Commit.ID_ABBREV] == '7c25255'
+    }
+
+    @Test
     void "Task inserts commit properties with Git project"() {
         def task = project.tasks.getByName(SnapshotPlugin.SNAPSHOT_TASK_NAME)
         task.actions.each { final Action action ->
